@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance to serve flaskProject
+After=network.target
+
+[Service]
+User=username
+Group=www-data
+WorkingDirectory=/home/username/yourproject
+Environment="PATH=/home/username/yourproject/yourenv/bin"
+ExecStart=/home/username/yourproject/yourenv/bin/gunicorn --workers 5 --bind unix:yourproject.sock -m 007 wsgi:app
+
+[Install]
+WantedBy=multi-user.target

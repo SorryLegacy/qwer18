@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %} Index {% endblock %}
+{% block content %}
+
+    <a href="/data/">List of inputs</a>
+    <form action="/data/" class='form-class'>
+        <button type="submit" class="btn btn-info">Send</button>
+        <button type="button" class="button-create btn btn-info">Add input</button>
+    </form>
+    <script>
+        let i = 1
+        $(".button-create").click(function () {
+            $('.form-class').append('<br><input type="text" ' + `name="text${i++}"` + 'class="input-class"/>');
+
+        });
+        $("form").submit(function () {
+            let $form = $(this)
+            let data = JSON.stringify($form.serializeArray())
+            console.log(data)
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: $form.attr("action"),
+                data: data,
+            })
+            return false
+        });
+        $(document).ajaxStop(function(){
+            window.location.reload();
+        });
+</script>
+{% endblock %}
